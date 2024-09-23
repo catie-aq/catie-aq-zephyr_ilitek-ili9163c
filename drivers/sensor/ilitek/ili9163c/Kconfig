@@ -1,0 +1,9 @@
+# Copyright (c) 2024 CATIE
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig ILI9163C
+    bool "ILITEK ILI9163C display controller sensor"
+    default y
+    depends on DT_HAS_ILITEK_ILI9163C_ENABLED
+    help
+      Enable driver for ILITEK ILI9163C display controller sensor.
