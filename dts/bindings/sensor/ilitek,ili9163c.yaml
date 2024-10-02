@@ -1,9 +1,0 @@
-# Copyright (c) 2024 CATIE
-# SPDX-License-Identifier: Apache-2.0
-
-description: |
-    ILITEK ILI9163C display controller sensor
-
-compatible: "ilitek,ili9163c"
-
-include: [sensor-device.yaml]
