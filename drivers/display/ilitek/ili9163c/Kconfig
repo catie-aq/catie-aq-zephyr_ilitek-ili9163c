@@ -1,0 +1,11 @@
+# Copyright (c) 2024 CATIE
+# SPDX-License-Identifier: Apache-2.0
+
+config ILI9163C
+    bool "ILI9163C Display Driver"
+    default y
+    depends on DT_HAS_ILITEK_ILI9163C_ENABLED
+    select ILI9XXX
+    select SPI
+    help
+      Enable support for the ILI9163C display controller.

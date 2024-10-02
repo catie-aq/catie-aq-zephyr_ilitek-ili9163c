@@ -1,0 +1,4 @@
+# drivers/display/Kconfig
+# SPDX-License-Identifier: Apache-2.0
+
+rsource "ili9163c/Kconfig"

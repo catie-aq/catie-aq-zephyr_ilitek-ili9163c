@@ -1,0 +1,7 @@
+# ilitek,ili9163.yaml
+
+description: ILI9163 128x160 display controller
+
+compatible: "ilitek,ili9163c"
+
+include: ilitek,ili9xxx-common.yaml
