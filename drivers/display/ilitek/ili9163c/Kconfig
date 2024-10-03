@@ -1,11 +1,22 @@
-# Copyright (c) 2024 CATIE
+# Copyright (c) 2024, CATIE
 # SPDX-License-Identifier: Apache-2.0
 
-config ILI9163C
-    bool "ILI9163C Display Driver"
+menuconfig ILI9163C
+    bool "ILI9163C display driver"
     default y
     depends on DT_HAS_ILITEK_ILI9163C_ENABLED
-    select ILI9XXX
-    select SPI
+    select MIPI_DBI
+    select MIPI_DBI_SPI
     help
-      Enable support for the ILI9163C display controller.
+    Enable driver for ILI9163C display driver.
+
+if ILI9163C
+
+config ILI9163C_READ
+    bool "Allow display_read API with ILI9163C"
+    help
+    Support display_read API with ILI9163C controllers. This API is opt-in,
+    because it adds code overhead and is not very performant due to
+    the requirement to bitshift data read from the ILI9XXX. Note the
+    API only supports RGB565 mode.
+endif
