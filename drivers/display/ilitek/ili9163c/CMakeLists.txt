@@ -3,4 +3,4 @@
 
 zephyr_library()
 
-zephyr_library_sources(display_ili9163c.c)
+zephyr_library_sources(ili9163c.c)
