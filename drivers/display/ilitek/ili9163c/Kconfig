@@ -6,7 +6,6 @@ menuconfig ILI9163C
     default y
     depends on DT_HAS_ILITEK_ILI9163C_ENABLED
     select MIPI_DBI
-    select MIPI_DBI_SPI
     help
     Enable driver for ILI9163C display driver.
 
