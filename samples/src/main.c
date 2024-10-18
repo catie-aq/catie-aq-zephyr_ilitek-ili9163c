@@ -4,7 +4,6 @@
  */
 
 #include <zephyr/device.h>
-#include <zephyr/devicetree.h>
 #include <zephyr/drivers/display.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/drivers/pwm.h>
@@ -20,6 +19,7 @@ LOG_MODULE_REGISTER(app);
 static uint32_t count;
 
 // PWM related variables
+static bool blinking = false;
 static int direction = 1;
 static int period = 1000000;
 static int increment = 10000;
@@ -32,13 +32,17 @@ int setup_pwm(void)
 		LOG_ERR("Error: PWM device %s is not ready", pwm_dev.dev->name);
 		return -ENODEV;
 	}
+	int err;
 
-	int err = pwm_set_dt(&pwm_dev, period, ratio);
+	if (blinking) {
+		err = pwm_set_dt(&pwm_dev, period, ratio);
+	} else {
+		err = pwm_set_dt(&pwm_dev, period, period);
+	}
+
 	if (err < 0) {
 		LOG_ERR("ERROR! [%d]", err);
 		return err;
-	} else {
-		LOG_INF("Set pulse to [%d/1000000]", ratio);
 	}
 
 	return 0;
@@ -74,7 +78,7 @@ int main(void)
 		return 0;
 	}
 
-		hello_world_label = lv_label_create(lv_scr_act());
+	hello_world_label = lv_label_create(lv_scr_act());
 
 	lv_label_set_text(hello_world_label, "6TRON BY CATIE!");
 	lv_obj_align(hello_world_label, LV_ALIGN_CENTER, 0, 0);
@@ -95,9 +99,13 @@ int main(void)
 			sprintf(count_str, "%d", count / 100U);
 			lv_label_set_text(count_label, count_str);
 		}
-		lv_task_handler();
 		++count;
+
+		if (blinking) {
+			update_pwm();
+		}
+
+		lv_task_handler();
 		k_sleep(K_MSEC(10));
-		update_pwm();
 	}
 }
