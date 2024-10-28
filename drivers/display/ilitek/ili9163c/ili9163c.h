@@ -49,10 +49,11 @@
 #define ILI9163C_NGAMCTRL 0xE1
 #define ILI9163C_PWCTRL1  0xC0
 #define ILI9163C_PWCTRL2  0xC1
+#define ILI9163C_PWCTRL3  0xC2
+#define ILI9163C_PWCTRL4  0xC3
 #define ILI9163C_VMCTRL1  0xC5
 #define ILI9163C_VMCTRL2  0xC7
 #define ILI9163C_GAMADJ   0xF2
-#define ILI9163C_DISPINV  0xB4
 #define ILI9163C_MADCTL   0x36
 
 /* Commands/registers length. */
@@ -62,16 +63,17 @@
 #define ILI9163C_NGAMCTRL_LEN 15U
 #define ILI9163C_PWCTRL1_LEN  2U
 #define ILI9163C_PWCTRL2_LEN  1U
+#define ILI9163C_PWCTRL3_LEN  1U
+#define ILI9163C_PWCTRL4_LEN  1U
 #define ILI9163C_VMCTRL1_LEN  2U
 #define ILI9163C_VMCTRL2_LEN  1U
 #define ILI9163C_GAMADJ_LEN   1U
-#define ILI9163C_DISPINV_LEN  1U
 #define ILI9163C_MADCTL_LEN   1U
 
 /** X resolution (pixels). */
-#define ILI9163C_X_RES 160U
+#define ILI9163C_X_RES 128U
 /** Y resolution (pixels). */
-#define ILI9163C_Y_RES 128U
+#define ILI9163C_Y_RES 160U
 
 /** Command/data GPIO level for commands. */
 #define ILI9163C_CMD  1U
@@ -117,11 +119,12 @@ struct ili9163c_regs {
 	uint8_t ngamctrl[ILI9163C_NGAMCTRL_LEN];
 	uint8_t pwctrl1[ILI9163C_PWCTRL1_LEN];
 	uint8_t pwctrl2[ILI9163C_PWCTRL2_LEN];
+	uint8_t pwctrl3[ILI9163C_PWCTRL3_LEN];
+	uint8_t pwctrl4[ILI9163C_PWCTRL4_LEN];
 	uint8_t vmctrl1[ILI9163C_VMCTRL1_LEN];
 	uint8_t vmctrl2[ILI9163C_VMCTRL2_LEN];
 	uint8_t gamadj[ILI9163C_GAMADJ_LEN];
-	uint8_t dispinv[ILI9163C_DISPINV_LEN];
-	uint8_t madctl[ILI9163C_MADCTL_LEN];
+	uint8_t madctl[ILI9163C_MADCTL_LEN]; /* To be replaced by rotation and inversion computation */
 };
 
 /* Initializer macro for ILI9163C registers. */
@@ -133,11 +136,12 @@ struct ili9163c_regs {
 		.ngamctrl = DT_INST_PROP(n, ngamctrl),                                             \
 		.pwctrl1 = DT_INST_PROP(n, pwctrl1),                                               \
 		.pwctrl2 = DT_INST_PROP(n, pwctrl2),                                               \
+		.pwctrl3 = {DT_INST_ENUM_IDX(n, pwctrl3)},                                               \
+		.pwctrl4 = {DT_INST_ENUM_IDX(n, pwctrl4)},                                               \
 		.vmctrl1 = DT_INST_PROP(n, vmctrl1),                                               \
 		.vmctrl2 = DT_INST_PROP(n, vmctrl2),                                               \
-		.gamadj = DT_INST_PROP(n, gamadj),                                                 \
-		.dispinv = DT_INST_PROP(n, dispinv),                                               \
-		.madctl = DT_INST_PROP(n, madctl),                                                 \
+		.gamadj = DT_INST_PROP(n, gamadj),                                               \
+		.madctl = {0x00},                                               \
 	}
 
 #endif /* ZEPHYR_DRIVERS_DISPLAY_ILI9163C_H_ */

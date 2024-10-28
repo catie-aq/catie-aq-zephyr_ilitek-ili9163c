@@ -80,6 +80,11 @@ int main(void)
 
 	hello_world_label = lv_label_create(lv_scr_act());
 
+	static lv_style_t style;
+    lv_style_init(&style);
+    lv_style_set_text_color(&style, lv_color_hex(0xA2C857));
+
+	lv_obj_add_style(hello_world_label, &style, 0);
 	lv_label_set_text(hello_world_label, "6TRON BY CATIE!");
 	lv_obj_align(hello_world_label, LV_ALIGN_CENTER, 0, 0);
 

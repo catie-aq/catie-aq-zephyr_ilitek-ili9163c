@@ -321,12 +321,6 @@ int ili9163c_regs_init(const struct device *dev)
 		return r;
 	}
 
-	LOG_HEXDUMP_DBG(regs->dispinv, ILI9163C_DISPINV_LEN, "DISP_INV");
-	r = ili9163c_transmit(dev, ILI9163C_DISPINV, regs->dispinv, ILI9163C_DISPINV_LEN);
-	if (r < 0) {
-		return r;
-	}
-
 	LOG_HEXDUMP_DBG(regs->pwctrl1, ILI9163C_PWCTRL1_LEN, "PWCTRL1");
 	r = ili9163c_transmit(dev, ILI9163C_PWCTRL1, regs->pwctrl1, ILI9163C_PWCTRL1_LEN);
 	if (r < 0) {
@@ -335,6 +329,18 @@ int ili9163c_regs_init(const struct device *dev)
 
 	LOG_HEXDUMP_DBG(regs->pwctrl2, ILI9163C_PWCTRL2_LEN, "PWCTRL2");
 	r = ili9163c_transmit(dev, ILI9163C_PWCTRL2, regs->pwctrl2, ILI9163C_PWCTRL2_LEN);
+	if (r < 0) {
+		return r;
+	}
+
+	LOG_HEXDUMP_DBG(regs->pwctrl3, ILI9163C_PWCTRL3_LEN, "PWCTRL3");
+	r = ili9163c_transmit(dev, ILI9163C_PWCTRL3, regs->pwctrl3, ILI9163C_PWCTRL3_LEN);
+	if (r < 0) {
+		return r;
+	}
+
+	LOG_HEXDUMP_DBG(regs->pwctrl4, ILI9163C_PWCTRL4_LEN, "PWCTRL4");
+	r = ili9163c_transmit(dev, ILI9163C_PWCTRL4, regs->pwctrl4, ILI9163C_PWCTRL4_LEN);
 	if (r < 0) {
 		return r;
 	}
