@@ -4,7 +4,7 @@
  */
 
 #include <zephyr/dt-bindings/gpio/sixtron-header.h>
-#include <zephyr/dt-bindings/display/ili9xxx.h>
+#include <zephyr/dt-bindings/display/panel.h>
 
 / {
 	chosen {
@@ -15,7 +15,7 @@
 		status = "okay";
 		compatible = "pwm-leds";
 
-		backlight_lcd: pwm_dev {
+		backlight_lcd: pwm-dev {
 			status = "okay";
 			pwms = <&pwm1 3 2000000 PWM_POLARITY_NORMAL>;
 		};
@@ -33,21 +33,10 @@
 			compatible = "ilitek,ili9163c";
 			mipi-max-frequency = <20000000>;  // 20MHz
 			reg = <0>;
-			pixel-format = <1>;
-			width = <128>;  
-			height = <160>;  
-			rotation = <90>;
-			madctl = [00];
-			frmctr1 = [08 08];
-			pgamctrl = [3F 25 1C 1E 20 12 2A 90 24 11 00 00 00 00 00];
-			ngamctrl = [20 20 20 20 05 00 15 A7 3D 18 25 2A 2B 2B 3A];
-			pwctrl1 = [0A 02];
-			pwctrl2 = [02];
-			vmctrl1 = [55 60];
-			vmctrl2 = [45];
-			gamset = [04];  
-			gamadj = [01];    
-			dispinv = [07];    
+			pixel-format = <PANEL_PIXEL_FORMAT_RGB_888>;
+			width = <128>;
+			height = <160>;
+			rotation = <0>;
 		};
 	};
 };

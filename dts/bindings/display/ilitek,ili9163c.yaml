@@ -45,10 +45,16 @@ properties:
     default: [0x04]
     description:
       Gamma set (GAMSET) register value.
+  
+  gamadj:
+    type: uint8-array
+    default: [0x01]
+    description:
+      Gamma adjust value.
 
   frmctr1:
     type: uint8-array
-    default: [0x08, 0x08]
+    default: [0x0E, 0x14]
     description:
       Frame rate control (in normal mode / full colors) (FRMCTR1) register value.
 
@@ -66,42 +72,50 @@ properties:
 
   pwctrl1:
     type: uint8-array
-    default: [0x0A, 0x02]
+    default: [0x0A, 0x05]
     description:
-      Power control 1 (PWCTRL1) register values.
+      Power control 1 - GVDD and voltage.
 
   pwctrl2:
     type: uint8-array
-    default: [0x02]
+    default: [0x07]
     description:
-      Power control 2 (PWCTRL2) register values.
+      Power control 2 - AVDD, VCL, VGH and VGL supply power level.
+
+  pwctrl3:
+    type: string
+    default: "Least"
+    description:
+      Power control 3 - amount of current in Operation amplifier.
+    enum:
+      - "Least"
+      - "Small"
+      - "Medium Low"
+      - "Medium"
+      - "Medium High"
+      - "Large"
+
+  pwctrl4:
+    type: string
+    default: "Least"
+    description:
+      Power control 4 - amount of current in Operational amplifier in Idle.
+    enum:
+      - "Least"
+      - "Small"
+      - "Medium Low"
+      - "Medium"
+      - "Medium High"
+      - "Large"
 
   vmctrl1:
     type: uint8-array
-    default: [0x50, 0x5B]
+    default: [0x43, 0x4D]
     description:
-      VCOM control 1 (VMCTRL1) register values.
+      VCOM control 1 - Set VCOMH Voltage.
 
   vmctrl2:
     type: uint8-array
     default: [0x40]
     description:
-      VCOM control 2 (VMCTRL2) register values.
-
-  gamadj:
-    type: uint8-array
-    default: [0x01]
-    description:
-      Gamma adjust value.
-
-  dispinv:
-    type: uint8-array
-    default: [0x07]
-    description:
-      Display inversion.
-
-  madctl:
-    type: uint8-array
-    default: [0x00]
-    description:
-      Memory Data Access Control (MADCTL) register. Controls screen rotation and mirroring.
+      VCOM control 2 - Set VCOMH Voltage.
