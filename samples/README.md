@@ -1,8 +1,3 @@
-.. 6tron :code-sample:: display
-   :name: Display
-   :relevant-api: display_interface
-
-   Draw basic rectangles from zephyr display samples [https://github.com/zephyrproject-rtos/zephyr/tree/main/samples/drivers/display].
 # Overview
 
 This sample application demonstrates the usage of the ILI9163C display from ILITEK.
@@ -17,16 +12,15 @@ This example:
 - Uses PWM to control the backlight brightness.
 
 > [!NOTE]
-> Ensure the display and PWM hardware configurations match the setup below for correct operation.
+> Ensure the display and PWM hardware configurations match the requirements below for correct operation.
 
 # Requirements
 
 - **Hardware:**
-    - Any compatible Zest Core board.
     - Board supporting I2C communication.
 - **Configuration Options:**
     - Set `CONFIG_DISPLAY=y` in `prj.conf` to use the DISPLAY API.
-    - Set `CONFIG_PWM=y` in `prj.conf` to use the PWM API.
+    - Set `CONFIG_PWM=y` in `prj.conf` to use the PWM API for backlight control.
 
 # References
 
