@@ -45,7 +45,7 @@ properties:
     default: [0x04]
     description:
       Gamma set (GAMSET) register value.
-  
+
   gamadj:
     type: uint8-array
     default: [0x01]
