@@ -124,7 +124,8 @@ struct ili9163c_regs {
 	uint8_t vmctrl1[ILI9163C_VMCTRL1_LEN];
 	uint8_t vmctrl2[ILI9163C_VMCTRL2_LEN];
 	uint8_t gamadj[ILI9163C_GAMADJ_LEN];
-	uint8_t madctl[ILI9163C_MADCTL_LEN]; /* To be replaced by rotation and inversion computation */
+	uint8_t madctl[ILI9163C_MADCTL_LEN]; /* To be replaced by rotation and inversion computation
+					      */
 };
 
 /* Initializer macro for ILI9163C registers. */
@@ -136,12 +137,12 @@ struct ili9163c_regs {
 		.ngamctrl = DT_INST_PROP(n, ngamctrl),                                             \
 		.pwctrl1 = DT_INST_PROP(n, pwctrl1),                                               \
 		.pwctrl2 = DT_INST_PROP(n, pwctrl2),                                               \
-		.pwctrl3 = {DT_INST_ENUM_IDX(n, pwctrl3)},                                               \
-		.pwctrl4 = {DT_INST_ENUM_IDX(n, pwctrl4)},                                               \
+		.pwctrl3 = {DT_INST_ENUM_IDX(n, pwctrl3)},                                         \
+		.pwctrl4 = {DT_INST_ENUM_IDX(n, pwctrl4)},                                         \
 		.vmctrl1 = DT_INST_PROP(n, vmctrl1),                                               \
 		.vmctrl2 = DT_INST_PROP(n, vmctrl2),                                               \
-		.gamadj = DT_INST_PROP(n, gamadj),                                               \
-		.madctl = {0x00},                                               \
+		.gamadj = DT_INST_PROP(n, gamadj),                                                 \
+		.madctl = {0x00},                                                                  \
 	}
 
 #endif /* ZEPHYR_DRIVERS_DISPLAY_ILI9163C_H_ */
