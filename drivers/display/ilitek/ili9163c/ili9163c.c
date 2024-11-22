@@ -440,8 +440,8 @@ static const struct ili9163c_quirks ili9163c_quirks = {
 			},                                                                         \
 		.pixel_format = DT_INST_PROP(n, pixel_format),                                     \
 		.rotation = DT_INST_PROP(n, rotation),                                             \
-		.x_resolution = ILI9163C_X_RES,                                                    \
-		.y_resolution = ILI9163C_Y_RES,                                                    \
+		.x_resolution = DT_INST_PROP(n, width),                                                    \
+		.y_resolution = DT_INST_PROP(n, height),                                                    \
 		.inversion = DT_INST_PROP(n, display_inversion),                                   \
 		.regs = &ili9163c_regs_##n,                                                        \
 		.regs_init_fn = ili9163c_regs_init,                                                \
