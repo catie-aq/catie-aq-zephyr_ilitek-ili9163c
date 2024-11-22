@@ -70,9 +70,9 @@
 #define ILI9163C_GAMADJ_LEN   1U
 #define ILI9163C_MADCTL_LEN   1U
 
-/** X resolution (pixels). */
+/** SCREEN X resolution (pixels). */
 #define ILI9163C_X_RES 128U
-/** Y resolution (pixels). */
+/** SCREEN Y resolution (pixels). */
 #define ILI9163C_Y_RES 160U
 
 /** Command/data GPIO level for commands. */
