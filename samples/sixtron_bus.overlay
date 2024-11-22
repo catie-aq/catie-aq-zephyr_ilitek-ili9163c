@@ -40,8 +40,3 @@
 		};
 	};
 };
-
-&timers1 {
-	status = "okay";
-	st,prescaler = <1000>;
-};
