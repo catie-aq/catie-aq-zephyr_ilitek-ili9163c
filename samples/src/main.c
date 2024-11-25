@@ -15,10 +15,6 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(app);
 
-#ifdef CONFIG_ARCH_POSIX
-#include "posix_board_if.h"
-#endif
-
 // Display variables
 enum corner {
 	TOP_LEFT,
@@ -68,20 +64,6 @@ void update_pwm(void)
 }
 
 typedef void (*fill_buffer)(enum corner corner, uint8_t grey, uint8_t *buf, size_t buf_size);
-
-#ifdef CONFIG_ARCH_POSIX
-static void posix_exit_main(int exit_code)
-{
-#if CONFIG_TEST
-	if (exit_code == 0) {
-		LOG_INF("PROJECT EXECUTION SUCCESSFUL");
-	} else {
-		LOG_INF("PROJECT EXECUTION FAILED");
-	}
-#endif
-	posix_exit(exit_code);
-}
-#endif
 
 static void fill_buffer_argb8888(enum corner corner, uint8_t grey, uint8_t *buf, size_t buf_size)
 {
@@ -305,11 +287,7 @@ static void fill_display(const struct device *display_dev,
 		break;
 	default:
 		LOG_ERR("Unsupported pixel format. Aborting sample.");
-#ifdef CONFIG_ARCH_POSIX
-		posix_exit_main(1);
-#else
 		return;
-#endif
 	}
 
 	(void)memset(buf, bg_color, buf_size);
@@ -350,18 +328,8 @@ static void fill_display(const struct device *display_dev,
 	grey_count = 0;
 	x = 0;
 	y = capabilities->y_resolution - rect_h;
-
-	while (1) {
-		fill_buffer_fnc(BOTTOM_LEFT, grey_count, buf, buf_size);
-		display_write(display_dev, x, y, &buf_desc, buf);
-		++grey_count;
-		k_msleep(grey_scale_sleep);
-#if CONFIG_TEST
-		if (grey_count >= 1024) {
-			break;
-		}
-#endif
-	}
+	fill_buffer_fnc(BOTTOM_LEFT, grey_count, buf, buf_size);
+	display_write(display_dev, x, y, &buf_desc, buf);
 }
 
 int main(void)
@@ -369,11 +337,6 @@ int main(void)
 	uint8_t *buf;
 	size_t buf_size = 0;
 	fill_buffer fill_buffer_fnc = NULL;
-
-	if (!pwm_is_ready_dt(&pwm_dev)) {
-		LOG_ERR("Error: PWM device %s is not ready", pwm_dev.dev->name);
-		return -ENODEV;
-	}
 
 	if (initialize_display(&display_dev, &capabilities) < 0) {
 		return 0;
@@ -400,8 +363,5 @@ int main(void)
 		k_sleep(K_MSEC(10));
 	}
 
-#ifdef CONFIG_ARCH_POSIX
-	posix_exit_main(0);
-#endif
 	return 0;
 }
