@@ -243,6 +243,11 @@ static int ili9163c_configure(const struct device *dev)
 	enum display_pixel_format pixel_format;
 	enum display_orientation orientation;
 
+	r = config->regs_init_fn(dev);
+	if (r < 0) {
+		return r;
+	}
+
 	if (config->pixel_format == ILI9163C_PIXEL_FORMAT_RGB565) {
 		pixel_format = PIXEL_FORMAT_RGB_565;
 	} else {
@@ -274,11 +279,6 @@ static int ili9163c_configure(const struct device *dev)
 		if (r < 0) {
 			return r;
 		}
-	}
-
-	r = config->regs_init_fn(dev);
-	if (r < 0) {
-		return r;
 	}
 
 	return 0;
