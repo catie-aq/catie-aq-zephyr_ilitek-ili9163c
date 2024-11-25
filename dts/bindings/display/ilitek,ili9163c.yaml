@@ -119,3 +119,8 @@ properties:
     default: [0x40]
     description:
       VCOM control 2 - Set VCOMH Voltage.
+
+  pwms:
+    type: phandle-array
+    description:
+      PWM phandles for backlight control.
