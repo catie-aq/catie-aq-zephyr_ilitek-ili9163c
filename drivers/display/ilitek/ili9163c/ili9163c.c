@@ -129,6 +129,17 @@ static int ili9163c_write(const struct device *dev, const uint16_t x, const uint
 	return 0;
 }
 
+static int ili9163c_set_brightness(const struct device *dev, uint8_t brightness)
+{
+	const struct ili9163c_config *config = dev->config;
+	int r;
+
+	r = pwm_set_dt(&config->pwm, ILI9163C_BACKLIGHT_PERIOD_NS,
+		       ILI9163C_BACKLIGHT_PERIOD_NS * brightness / ILI9163C_BACKLIGHT_RESOLUTION);
+
+	return r;
+}
+
 static int ili9163c_display_blanking_off(const struct device *dev)
 {
 	LOG_DBG("Turning display blanking off");
@@ -268,6 +279,11 @@ static int ili9163c_configure(const struct device *dev)
 		}
 	}
 
+	r = ili9163c_set_brightness(dev, 255);
+	if (r < 0) {
+		return r;
+	}
+
 	return 0;
 }
 
@@ -359,6 +375,11 @@ static int ili9163c_init(const struct device *dev)
 
 	int r;
 
+	if (!pwm_is_ready_dt(&config->pwm)) {
+		LOG_ERR("PWM device is not ready");
+		return -ENODEV;
+	}
+
 	if (!device_is_ready(config->mipi_dev)) {
 		LOG_ERR("MIPI DBI device is not ready");
 		return -ENODEV;
@@ -399,6 +420,7 @@ static const struct display_driver_api ili9163c_api = {
 	.blanking_on = ili9163c_display_blanking_on,
 	.blanking_off = ili9163c_display_blanking_off,
 	.write = ili9163c_write,
+	.set_brightness = ili9163c_set_brightness,
 #ifdef CONFIG_ILI9163C_READ
 	.read = ili9163c_read,
 #endif
