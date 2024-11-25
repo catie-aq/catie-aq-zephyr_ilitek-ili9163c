@@ -175,7 +175,6 @@ static int ili9163c_set_pixel_format(const struct device *dev,
 static int ili9163c_set_orientation(const struct device *dev,
 				    const enum display_orientation orientation)
 {
-	const struct ili9163c_config *config = dev->config;
 	struct ili9163c_data *data = dev->data;
 
 	int r;
@@ -408,17 +407,12 @@ static const struct display_driver_api ili9163c_api = {
 	.set_orientation = ili9163c_set_orientation,
 };
 
-static const struct ili9163c_quirks ili9163c_quirks = {
-	.cmd_set = CMD_SET_1,
-};
-
 #define INST_DT_ILI9163C(n) DT_INST(n, ilitek_ili9163c)
 
 #define ILI9163C_INIT(n)                                                                           \
 	ILI9163C_REGS_INIT(n);                                                                     \
                                                                                                    \
 	static const struct ili9163c_config ili9163c_config_##n = {                                \
-		.quirks = &ili9163c_quirks,                                                        \
 		.mipi_dev = DEVICE_DT_GET(DT_PARENT(DT_INST(n, DT_DRV_COMPAT))),                   \
 		.dbi_config =                                                                      \
 			{                                                                          \

@@ -70,11 +70,6 @@
 #define ILI9163C_GAMADJ_LEN   1U
 #define ILI9163C_MADCTL_LEN   1U
 
-/** SCREEN X resolution (pixels). */
-#define ILI9163C_X_RES 128U
-/** SCREEN Y resolution (pixels). */
-#define ILI9163C_Y_RES 160U
-
 /** Command/data GPIO level for commands. */
 #define ILI9163C_CMD  1U
 /** Command/data GPIO level for data. */
@@ -89,17 +84,7 @@
 /** Reset wait time (ms), ref 15.4 of ILI9163C manual. */
 #define ILI9163C_RESET_WAIT_TIME 5
 
-enum madctl_cmd_set {
-	CMD_SET_1,
-	CMD_SET_2,
-};
-
-struct ili9163c_quirks {
-	enum madctl_cmd_set cmd_set;
-};
-
 struct ili9163c_config {
-	const struct ili9163c_quirks *quirks;
 	const struct device *mipi_dev;
 	struct mipi_dbi_config dbi_config;
 	uint8_t pixel_format;
