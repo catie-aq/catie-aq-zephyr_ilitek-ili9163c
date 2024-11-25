@@ -180,26 +180,14 @@ static int ili9163c_set_orientation(const struct device *dev,
 
 	int r;
 	uint8_t tx_data = ILI9163C_MADCTL_BGR;
-	if (config->quirks->cmd_set == CMD_SET_1) {
-		if (orientation == DISPLAY_ORIENTATION_NORMAL) {
-			tx_data |= ILI9163C_MADCTL_MX;
-		} else if (orientation == DISPLAY_ORIENTATION_ROTATED_90) {
-			tx_data |= ILI9163C_MADCTL_MV;
-		} else if (orientation == DISPLAY_ORIENTATION_ROTATED_180) {
-			tx_data |= ILI9163C_MADCTL_MY;
-		} else if (orientation == DISPLAY_ORIENTATION_ROTATED_270) {
-			tx_data |= ILI9163C_MADCTL_MV | ILI9163C_MADCTL_MX | ILI9163C_MADCTL_MY;
-		}
-	} else if (config->quirks->cmd_set == CMD_SET_2) {
-		if (orientation == DISPLAY_ORIENTATION_NORMAL) {
-			/* Do nothing */
-		} else if (orientation == DISPLAY_ORIENTATION_ROTATED_90) {
-			tx_data |= ILI9163C_MADCTL_MV | ILI9163C_MADCTL_MY;
-		} else if (orientation == DISPLAY_ORIENTATION_ROTATED_180) {
-			tx_data |= ILI9163C_MADCTL_MY | ILI9163C_MADCTL_MX;
-		} else if (orientation == DISPLAY_ORIENTATION_ROTATED_270) {
-			tx_data |= ILI9163C_MADCTL_MV | ILI9163C_MADCTL_MX;
-		}
+	if (orientation == DISPLAY_ORIENTATION_NORMAL) {
+		/* Do nothing */
+	} else if (orientation == DISPLAY_ORIENTATION_ROTATED_90) {
+		tx_data |= ILI9163C_MADCTL_MV | ILI9163C_MADCTL_MX;
+	} else if (orientation == DISPLAY_ORIENTATION_ROTATED_180) {
+		tx_data |= ILI9163C_MADCTL_MX | ILI9163C_MADCTL_MY;
+	} else if (orientation == DISPLAY_ORIENTATION_ROTATED_270) {
+		tx_data |= ILI9163C_MADCTL_MV | ILI9163C_MADCTL_MY;
 	}
 
 	r = ili9163c_transmit(dev, ILI9163C_MADCTL, &tx_data, 1U);
