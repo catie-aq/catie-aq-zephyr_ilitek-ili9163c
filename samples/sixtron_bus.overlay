@@ -11,16 +11,6 @@
 		zephyr,display = &ili9163c;
 	};
 
-	pwm_devices {
-		status = "okay";
-		compatible = "pwm-leds";
-
-		backlight_lcd: pwm-dev {
-			status = "okay";
-			pwms = <&pwm1 3 2000000 PWM_POLARITY_NORMAL>;
-		};
-	};
-
 	mipi_dbi {
 		compatible = "zephyr,mipi-dbi-spi";
 		dc-gpios = <&sixtron_connector DIO2 GPIO_ACTIVE_HIGH>;  /* Data/Command */
@@ -37,6 +27,7 @@
 			width = <128>;
 			height = <160>;
 			rotation = <0>;
+			pwms = <&sixtron_pwm PWM1 1000000 PWM_POLARITY_NORMAL>;
 		};
 	};
 };

@@ -29,22 +29,18 @@ enum corner {
 const struct device *display_dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_display));
 struct display_capabilities capabilities;
 
-// PWM variables
-static bool blinking = false;
-static int period = 1000000;
-static int ratio = 500000;
-static const struct pwm_dt_spec pwm_dev = PWM_DT_SPEC_GET(DT_NODELABEL(backlight_lcd));
+#define BACKLIGHT_MAX_BRIGHTNESS 255
+#define BACKLIGHT_MIN_BRIGHTNESS 0
+static bool blinking = true;
+static int direction = 1;
+static int increment = 5;
+static int ratio = BACKLIGHT_MAX_BRIGHTNESS;
 
 int setup_pwm(void)
 {
-	if (!pwm_is_ready_dt(&pwm_dev)) {
-		LOG_ERR("Error: PWM device %s is not ready", pwm_dev.dev->name);
-		return -ENODEV;
-	}
 	int err;
 
-	err = pwm_set_dt(&pwm_dev, period, ratio);
-
+	err = display_set_brightness(display_dev, BACKLIGHT_MAX_BRIGHTNESS);
 	if (err < 0) {
 		LOG_ERR("ERROR! [%d]", err);
 		return err;
@@ -55,11 +51,19 @@ int setup_pwm(void)
 
 void update_pwm(void)
 {
-	int err = pwm_set_dt(&pwm_dev, period, ratio);
+	int err;
+	if (ratio >= BACKLIGHT_MAX_BRIGHTNESS) {
+		direction = -1;
+	} else if (ratio <= BACKLIGHT_MIN_BRIGHTNESS) {
+		direction = 1;
+	}
+	ratio += direction * increment;
+
+	err = display_set_brightness(display_dev, ratio);
 	if (err < 0) {
 		LOG_ERR("ERROR! [%d]", err);
 	} else {
-		LOG_INF("Set pulse to [%d/1000000]", ratio);
+		LOG_INF("Set pulse to [%d/255]", ratio);
 	}
 }
 

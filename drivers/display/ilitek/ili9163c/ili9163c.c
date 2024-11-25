@@ -425,6 +425,7 @@ static const struct display_driver_api ili9163c_api = {
 		.x_resolution = DT_INST_PROP(n, width),                                            \
 		.y_resolution = DT_INST_PROP(n, height),                                           \
 		.inversion = DT_INST_PROP(n, display_inversion),                                   \
+		.pwm = PWM_DT_SPEC_INST_GET(n),                                                    \
 		.regs = &ili9163c_regs_##n,                                                        \
 		.regs_init_fn = ili9163c_regs_init,                                                \
 	};                                                                                         \
