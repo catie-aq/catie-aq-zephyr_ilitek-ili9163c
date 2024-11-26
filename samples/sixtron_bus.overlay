@@ -21,8 +21,8 @@
 
 		ili9163c: ili9163c@0 {
 			compatible = "ilitek,ili9163c";
-			mipi-max-frequency = <20000000>;  // 20MHz
-			reg = <0>;
+			mipi-max-frequency = <20000000>;  /* 20MHz */
+			reg = <0>; /* Chip select index for SPI bus */
 			pixel-format = <PANEL_PIXEL_FORMAT_RGB_888>;
 			width = <128>;
 			height = <160>;
