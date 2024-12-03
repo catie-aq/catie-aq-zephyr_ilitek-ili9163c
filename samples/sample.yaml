@@ -1,0 +1,8 @@
+sample:
+  name: Ili9163c display sample
+tests:
+  sample.default:
+    tags: display
+    integration_platforms:
+      - zest_core_stm32l4a6rg
+    depends_on: spi
